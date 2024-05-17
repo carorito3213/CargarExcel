@@ -10,6 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.service.ExcelService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
+
+import io.swagger.annotations.ApiResponse;
+
 import org.springframework.http.HttpStatus;
 
 @RestController
@@ -19,6 +24,12 @@ public class ExcelController {
 	@Autowired
 	ExcelService excelService;
 
+
+    @ApiOperation(value = "Cargar archivo Excel", notes = "Este endpoint permite cargar y procesar un archivo Excel.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "El archivo se cargó y procesó correctamente."),
+            @ApiResponse(code = 500, message = "Ocurrió un error interno al procesar el archivo.")
+    })
 	@PostMapping("/upload")
 	public ResponseEntity<String> etlExcelFile(@RequestParam("file") MultipartFile file) {
 		

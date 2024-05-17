@@ -20,7 +20,6 @@ import com.exception.ExcelIOException;
 import com.exception.InvalidExcelFormatException;
 import com.model.EmpleadoModel;
 import com.model.RoleModel;
-import com.repository.EmpleadoRepository;
 import com.repository.RoleRepository;
 import com.util.Converter;
 import com.util.ErrorMessages;
@@ -29,13 +28,18 @@ import com.util.ErrorMessages;
 public class ExcelService {
 	
 	private static final Logger logger = LogManager.getLogger(ExcelService.class);
-	
-    @Autowired
-    private EmpleadoRepository empleadoRepository;
     
     @Autowired
     private RoleRepository roleRepository;
-
+    
+    /**
+	 * Metodo que recibe archivo excel para la extracion de datos, crea hilos virtuales 
+	 * y ejecuta 2 tareas para extraer la informacion, transformarla y cargarla
+	 * 
+	 * @param file  El archivo Excel del que se van a extraer los datos.
+	 * @throws InvalidExcelFormatException Si el formato del archivo Excel no es válido.
+	 * @throws IOException            Si se produce un error de E/S al procesar el archivo Excel.
+	 */
 	public void etlExcelFile(MultipartFile file) throws IOException, InvalidExcelFormatException {
 
 		// Cola para el almacenamiento temporal de datos transformados
@@ -54,6 +58,14 @@ public class ExcelService {
 
 	}
 
+	/**
+	 * Extrae datos de un archivo Excel y los coloca en una cola para su procesamiento posterior.
+	 * 
+	 * @param file  El archivo Excel del que se van a extraer los datos.
+	 * @param queue La cola en la que se van a colocar los modelos de rol para su procesamiento.
+	 * @throws InvalidExcelFormatException Si el formato del archivo Excel no es válido.
+	 * @throws ExcelIOException            Si se produce un error de E/S al procesar el archivo Excel.
+	 */
 	private static void extractData(MultipartFile file, BlockingQueue<RoleModel> queue) 
 			throws InvalidExcelFormatException {
 
@@ -82,17 +94,22 @@ public class ExcelService {
 
 				//System.out.println("Extracted: " + empleado);
 			}
+			
+			workbook.close();
 
 		} catch (IOException | InterruptedException e) { 
 			throw new ExcelIOException(ErrorMessages.IO_EXCEPTION.getMessage());
 		} 
 		
-		/*catch (InvalidExcelFormatException e) {
-			throw e;
-		}*/
 		 
 	}
 	
+	/**
+	 * Transforma y carga datos desde una cola en una base de datos.
+	 * 
+	 * @param queue La cola de la que se van a extraer y procesar los datos.
+	 */
+
 	private void transformAndLoadData(BlockingQueue<RoleModel> queue){
         
 		while (true) {
@@ -117,6 +134,13 @@ public class ExcelService {
 		
 	}
 
+	/**
+	 * Obtiene el valor de una celda como una cadena de texto.
+	 * 
+	 * @param cell La celda de la que se va a obtener el valor.
+	 * @return El valor de la celda como una cadena de texto.
+	 * @throws InvalidExcelFormatException Si el tipo de celda no es válido o la celda es nula.
+	 */
 	private static String getCellValueAsString(Cell cell) {
 		if (cell == null) {
 			logger.error(ErrorMessages.INVALID_FILE_FORMAT.getMessage());

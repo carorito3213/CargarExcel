@@ -7,6 +7,11 @@ import com.model.RoleModel;
 
 public class Converter {
 	
+	/**
+	 * Metodo que convierte un objeto EmpleadoModel en un objeto EmpleadoEntity
+	 * 
+	 * @param model el objeto model al que se le va a dar la conversion.
+	 */
 	public static EmpleadoEntity convertToEmpleadoEntity(EmpleadoModel model) {
         
 		if (model == null) {
@@ -22,6 +27,11 @@ public class Converter {
         return entity;
     }
 
+	/**
+	 * Metodo que convierte un objeto EmpleadoEntity en un objeto EmpleadoModel
+	 * 
+	 * @param entity el objeto model al que se le va a dar la conversion.
+	 */
     public static EmpleadoModel convertToEmpleadoModel(EmpleadoEntity entity) {
         
     	if (entity == null) {
@@ -39,6 +49,11 @@ public class Converter {
         return model;
     }
     
+    /**
+	 * Metodo que convierte un objeto RoleModel en un objeto RoleEntity
+	 * 
+	 * @param model el objeto model al que se le va a dar la conversion.
+	 */
     public static RoleEntity convertToRoleEntity(RoleModel model) {
         
 		if (model == null) {
@@ -55,6 +70,11 @@ public class Converter {
         return roleEtity;
     }
     
+    /**
+	 * Metodo que convierte un objeto RoleEntity en un objeto RoleModel
+	 * 
+	 * @param entity el objeto model al que se le va a dar la conversion.
+	 */
     public static RoleModel convertToRoleModel(RoleEntity entity) {
         
     	if (entity == null) {
