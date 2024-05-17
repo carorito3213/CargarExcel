@@ -12,8 +12,6 @@ import com.service.ExcelService;
 
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/excel")
 public class ExcelController {
@@ -22,10 +20,13 @@ public class ExcelController {
 	ExcelService excelService;
 
 	@PostMapping("/upload")
-	public ResponseEntity<List<String>> uploadAndReadExcelFile(@RequestParam("file") MultipartFile file) {
+	public ResponseEntity<String> etlExcelFile(@RequestParam("file") MultipartFile file) {
+		
 		try {
-			List<String> result = excelService.uploadAndReadExcelFile(file);
-			return new ResponseEntity<>(result, HttpStatus.OK);
+			excelService.etlExcelFile(file);
+
+			return new ResponseEntity<>("Se inicio el procesamiento del archivo", HttpStatus.OK);
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
