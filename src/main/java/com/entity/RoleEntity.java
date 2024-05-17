@@ -35,6 +35,12 @@ public class RoleEntity {
 		this.nombre = nombre;
 		this.empleado = empleadoId;
 	}
+	
+	public RoleEntity( String nombre, EmpleadoEntity empleadoId) {
+		super();
+		this.nombre = nombre;
+		this.empleado = empleadoId;
+	}
 
 	public Integer getId() {
 		return id;

@@ -110,7 +110,7 @@ public class ExcelService {
 	 * @param queue La cola de la que se van a extraer y procesar los datos.
 	 */
 
-	private void transformAndLoadData(BlockingQueue<RoleModel> queue){
+	public void transformAndLoadData(BlockingQueue<RoleModel> queue){
         
 		while (true) {
 			

@@ -39,6 +39,14 @@ public class EmpleadoEntity {
 		this.telefono = telefono;
 		this.rol = rol;
 	}
+	
+	public EmpleadoEntity(String nombre, String apellido, String email, String telefono) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.email = email;
+		this.telefono = telefono;
+	}
 
 	public Integer getId() {
 		return id;

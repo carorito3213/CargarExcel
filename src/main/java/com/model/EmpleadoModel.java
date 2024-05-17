@@ -1,17 +1,13 @@
 package com.model;
 
-import lombok.Builder;
-import lombok.Data;
 
-@Data
-@Builder
 public class EmpleadoModel {
 	
-	String nombre;
-	String apellido;
-	String email;
-	String telefono;
-	RoleModel rol;
+	private String nombre;
+	private String apellido;
+	private String email;
+	private String telefono;
+	private RoleModel rol;
 	
 	public EmpleadoModel() {
 		super();
